@@ -15,7 +15,7 @@
 	</properties>
 
 	<dependencies>
-			
+
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-frontend-jaxws</artifactId>
@@ -36,6 +36,10 @@
 			<groupId>com.webcaisse.dao.hibernate</groupId>
 			<artifactId>com.webcaisse.dao.hibernate</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
 		</dependency>
 	</dependencies>
 
