@@ -10,8 +10,11 @@
 
 	<import resource="classpath:dao.hibernate.config.xml" />
 	
+	<!-- dao beans -->
+	<import resource="classpath:dao.hibernate.component.xml"/>
+	
+	
 	<!-- End points -->
-
 	<jaxws:endpoint id="gestionCaisse"
-		implementor="com.webcaisse.ws.CaisseManagerServiceImpl" address="/gestionCaisse" />
+		implementor="com.webcaisse.ws.impl.CaisseManagerServiceImpl" address="/gestionCaisse" />
 </beans>
