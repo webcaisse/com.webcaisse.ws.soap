@@ -5,17 +5,14 @@ import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 
-import com.webcaisse.dao.hibernate.model.Famille;
-import com.webcaisse.dao.hibernate.model.Produit;
-
 
 @WebService
 public interface CaisseManagerService {
 
 	
 	@WebMethod
-	public List<Famille> getFamillesActivees ();
+	public List getFamillesActivees ();
 	
 	@WebMethod 
-	public List<Produit> getProduitParFamilleReference (String reference);
+	public List getProduitParFamilleReference (String reference);
 }

@@ -15,6 +15,65 @@
 	</properties>
 
 	<dependencies>
+<dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.5.6</version>
+    </dependency>
+    <!-- concrete Log4J Implementation for SLF4J API-->
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-log4j12</artifactId>
+        <version>1.5.6</version>
+    </dependency>		<!-- Dao -->
+		<dependency>
+			<groupId>com.webcaisse.dao.hibernate</groupId>
+			<artifactId>com.webcaisse.dao.hibernate</artifactId>
+			<version>0.0.3-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-beans</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Spring framework -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>3.2.11.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>3.2.11.RELEASE</version>
+		</dependency>
+
+		<!-- Spring web services -->
+		<dependency>
+			<groupId>org.springframework.ws</groupId>
+			<artifactId>spring-ws-core</artifactId>
+			<version>2.2.0.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
@@ -31,16 +90,8 @@
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-transports-http-jetty</artifactId>
 			<version>${cxf.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.webcaisse.dao.hibernate</groupId>
-			<artifactId>com.webcaisse.dao.hibernate</artifactId>
-			<version>0.0.3-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-beans</artifactId>
-		</dependency>
+		</dependency>		
+		
 	</dependencies>
 
 	<build>

@@ -2,14 +2,10 @@ package com.webcaisse.ws.impl;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.webcaisse.dao.hibernate.IProductDao;
 import com.webcaisse.dao.hibernate.model.Famille;
-import com.webcaisse.dao.hibernate.model.Produit;
 import com.webcaisse.ws.CaisseManagerService;
 
 public class CaisseManagerServiceImpl implements CaisseManagerService {
@@ -17,12 +13,11 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 	@Autowired
 	IProductDao productDao;
 
-	@Transactional
 	public List<Famille> getFamillesActivees() {
 		return productDao.getFamillies();
 	}
 
-	public List<Produit> getProduitParFamilleReference(String reference) {
+	public List<Famille> getProduitParFamilleReference(String reference) {
 
 		System.out.println("je suis la dans le webservice");
 		// Famille famille = new Famille("Pizza",reference);
