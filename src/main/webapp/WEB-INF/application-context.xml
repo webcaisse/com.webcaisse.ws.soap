@@ -1,14 +1,17 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans.xsd
-	http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+	http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+		http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<import resource="classpath:META-INF/cxf/cxf.xml" />
 	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
-
 	<import resource="classpath:dao.hibernate.config.xml" />
+<<<<<<< HEAD
 
 	<!-- dao beans -->
 	<import resource="classpath:dao.hibernate.component.xml" />
@@ -17,15 +20,23 @@
 	<!-- End points -->
 
 	<bean name="wcBean" class="com.webcaisse.ws.impl.CaisseManagerServiceImpl" />
+=======
+	<import resource="classpath:dao.hibernate.component.xml" />
+
+	<bean name="wcBean" class="com.webcaisse.ws.impl.CaisseManagerServiceImpl"/>
+>>>>>>> 3ac42fab7dc1b6555dfb0940996044c1dc8a4f13
 
 
 	<!-- End points -->
 	<jaxws:endpoint id="gestionCaisse" implementor="#wcBean"
 		address="/gestionCaisse" />
 
+<<<<<<< HEAD
 
 	<bean name="authenticationService" class="com.webcaisse.ws.impl.AuthentificationServiceImpl"></bean>
 
 	<jaxws:endpoint id="authentification" implementor="#authenticationService"
 		address="/authentification" />
+=======
+>>>>>>> 3ac42fab7dc1b6555dfb0940996044c1dc8a4f13
 </beans>

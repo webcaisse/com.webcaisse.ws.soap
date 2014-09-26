@@ -1,12 +1,6 @@
 package com.webcaisse.ws.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.webcaisse.dao.hibernate.IAuthentification;
-import com.webcaisse.dao.hibernate.model.User;
 import com.webcaisse.ws.AuthentificationService;
-import com.webcaisse.ws.model.UserVo;
 
 public class AuthentificationServiceImpl implements AuthentificationService {
 
