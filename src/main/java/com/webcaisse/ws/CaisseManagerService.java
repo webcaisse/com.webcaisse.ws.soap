@@ -17,5 +17,8 @@ public interface CaisseManagerService {
 	public List<Famille> getFamillesActivees ();
 	
 	@WebMethod 
-	public List<Produit> getProduitParFamilleReference (String reference);
+	public void getProduitParFamilleReference (String reference);
+	
+	@WebMethod 
+	public Long ajouterProduit(Produit p, Long idMenu) ;
 }

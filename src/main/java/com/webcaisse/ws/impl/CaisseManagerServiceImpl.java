@@ -2,7 +2,7 @@ package com.webcaisse.ws.impl;
 
 import java.util.List;
 
-import javax.annotation.Resource;
+import javax.jws.WebMethod;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +22,7 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 		return productDao.getFamillies();
 	}
 
-	public List<Produit> getProduitParFamilleReference(String reference) {
+	public void getProduitParFamilleReference(String reference) {
 
 		System.out.println("je suis la dans le webservice");
 		// Famille famille = new Famille("Pizza",reference);
@@ -39,6 +39,12 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 		// prod2.setLibelle("Napolitaine");
 		// prod2.setPrix(20D);
 
-		return null;// Arrays.asList(new Produit[]{prod1,prod2});
+		//return null;// Arrays.asList(new Produit[]{prod1,prod2});
 	}
+	public Long ajouterProduit(Produit p, Long idMenu){
+		return productDao.ajouterProduit(p, idMenu);
+		
+	}
+	
+	
 }

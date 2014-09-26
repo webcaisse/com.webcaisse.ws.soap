@@ -9,12 +9,23 @@
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
 	<import resource="classpath:dao.hibernate.config.xml" />
-	
+
 	<!-- dao beans -->
-	<import resource="classpath:dao.hibernate.component.xml"/>
-	
-	
+	<import resource="classpath:dao.hibernate.component.xml" />
+
+
 	<!-- End points -->
-	<jaxws:endpoint id="gestionCaisse"
-		implementor="com.webcaisse.ws.impl.CaisseManagerServiceImpl" address="/gestionCaisse" />
+
+	<bean name="wcBean" class="com.webcaisse.ws.impl.CaisseManagerServiceImpl" />
+
+
+	<!-- End points -->
+	<jaxws:endpoint id="gestionCaisse" implementor="#wcBean"
+		address="/gestionCaisse" />
+
+
+	<bean name="authenticationService" class="com.webcaisse.ws.impl.AuthentificationServiceImpl"></bean>
+
+	<jaxws:endpoint id="authentification" implementor="#authenticationService"
+		address="/authentification" />
 </beans>
