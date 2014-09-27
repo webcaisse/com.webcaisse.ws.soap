@@ -11,7 +11,6 @@
 	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 	<import resource="classpath:dao.hibernate.config.xml" />
-<<<<<<< HEAD
 
 	<!-- dao beans -->
 	<import resource="classpath:dao.hibernate.component.xml" />
@@ -20,23 +19,13 @@
 	<!-- End points -->
 
 	<bean name="wcBean" class="com.webcaisse.ws.impl.CaisseManagerServiceImpl" />
-=======
-	<import resource="classpath:dao.hibernate.component.xml" />
-
-	<bean name="wcBean" class="com.webcaisse.ws.impl.CaisseManagerServiceImpl"/>
->>>>>>> 3ac42fab7dc1b6555dfb0940996044c1dc8a4f13
-
 
 	<!-- End points -->
 	<jaxws:endpoint id="gestionCaisse" implementor="#wcBean"
 		address="/gestionCaisse" />
 
-<<<<<<< HEAD
-
 	<bean name="authenticationService" class="com.webcaisse.ws.impl.AuthentificationServiceImpl"></bean>
 
 	<jaxws:endpoint id="authentification" implementor="#authenticationService"
 		address="/authentification" />
-=======
->>>>>>> 3ac42fab7dc1b6555dfb0940996044c1dc8a4f13
 </beans>

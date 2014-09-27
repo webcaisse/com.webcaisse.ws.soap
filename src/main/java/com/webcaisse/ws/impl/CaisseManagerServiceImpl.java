@@ -7,26 +7,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.webcaisse.dao.hibernate.IProductDao;
 import com.webcaisse.dao.hibernate.model.Famille;
-import com.webcaisse.dao.hibernate.model.Produit;
-import com.webcaisse.ws.CaisseManagerService;
+import com.webcaisse.ws.interfaces.CaisseManagerService;
+import com.webcaisse.ws.model.ProduitIn;
 
 public class CaisseManagerServiceImpl implements CaisseManagerService {
 
 	@Autowired
 	IProductDao productDao;
 
-	public List<com.webcaisse.ws.model.Famille> getFamillesActivees() {
-		List<com.webcaisse.ws.model.Famille> famillesVo  = new ArrayList<com.webcaisse.ws.model.Famille>();
+	public List<com.webcaisse.ws.model.FamilleOut> getFamillesActivees() {
+		List<com.webcaisse.ws.model.FamilleOut> famillesVo  = new ArrayList<com.webcaisse.ws.model.FamilleOut>();
 		List<Famille> familles  = productDao.getFamillies();
 		for (Famille famille : familles) {
-			com.webcaisse.ws.model.Famille fam = new com.webcaisse.ws.model.Famille();
+			com.webcaisse.ws.model.FamilleOut fam = new com.webcaisse.ws.model.FamilleOut();
 			fam.setLibelle(famille.getLibelle());
 			famillesVo.add(fam);
 		}
 		return famillesVo;
 	}
 
-	public List<com.webcaisse.ws.model.Famille> getProduitParFamilleReference(String reference) {
+	public List<com.webcaisse.ws.model.FamilleOut> getProduitParFamilleReference(String reference) {
 
 		System.out.println("je suis la dans le webservice");
 		// Famille famille = new Famille("Pizza",reference);
@@ -49,9 +49,9 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 		
 		return null;
 	}
-	public Long ajouterProduit(Produit p, Long idMenu){
-		return productDao.ajouterProduit(p, idMenu);
-		
+	public Long ajouterProduit(ProduitIn p, Long idMenu){
+		//return productDao.ajouterProduit(p, idMenu);
+		return null;
 	}
 	
 	
