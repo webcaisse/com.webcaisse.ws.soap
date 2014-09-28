@@ -7,8 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.webcaisse.dao.hibernate.IProductDao;
 import com.webcaisse.dao.hibernate.model.Famille;
+import com.webcaisse.dao.hibernate.model.Prix;
+import com.webcaisse.dao.hibernate.model.Produit;
 import com.webcaisse.ws.interfaces.CaisseManagerService;
+import com.webcaisse.ws.model.PrixOut;
 import com.webcaisse.ws.model.ProduitIn;
+import com.webcaisse.ws.model.ProduitOut;
 
 public class CaisseManagerServiceImpl implements CaisseManagerService {
 
@@ -53,6 +57,31 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 		//return productDao.ajouterProduit(p, idMenu);
 		return null;
 	}
+	public List<ProduitOut> getProductsByFamilly (Long familleId){
+		
+		
+		List<com.webcaisse.ws.model.ProduitOut> produitsVo  = new ArrayList<com.webcaisse.ws.model.ProduitOut>();
+		List<Produit> produits  = productDao.getProductsByFamilly(familleId);
+		for (Produit produit : produits) {
+			com.webcaisse.ws.model.ProduitOut p = new com.webcaisse.ws.model.ProduitOut();
+			p.setDescription(produit.getDescription());
+			p.setLibelle(produit.getLibelle());
+			p.setQteStock(produit.getQteStock());
+			
+			List<PrixOut> prixOut  = new ArrayList<PrixOut>();
+			for (Prix prix : produit.getPrix()) {
+				
+				PrixOut po  = new PrixOut();
+				po.setValeur(prix.getPrix());
+				prixOut.add(po);
+			}
+			p.setPrix(prixOut);
+			produitsVo.add(p);
+		}
+		return produitsVo;
+	}
+		
+	}
 	
 	
-}
+
