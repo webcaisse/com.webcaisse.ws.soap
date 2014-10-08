@@ -25,6 +25,7 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 		for (Famille famille : familles) {
 			com.webcaisse.ws.model.FamilleOut fam = new com.webcaisse.ws.model.FamilleOut();
 			fam.setLibelle(famille.getLibelle());
+			fam.setId(famille.getId());
 			famillesVo.add(fam);
 		}
 		return famillesVo;
@@ -61,23 +62,42 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 		
 		
 		List<com.webcaisse.ws.model.ProduitOut> produitsVo  = new ArrayList<com.webcaisse.ws.model.ProduitOut>();
+		
 		List<Produit> produits  = productDao.getProductsByFamilly(familleId);
 		for (Produit produit : produits) {
-			com.webcaisse.ws.model.ProduitOut p = new com.webcaisse.ws.model.ProduitOut();
-			p.setDescription(produit.getDescription());
-			p.setLibelle(produit.getLibelle());
-			p.setQteStock(produit.getQteStock());
 			
-			List<PrixOut> prixOut  = new ArrayList<PrixOut>();
-			for (Prix prix : produit.getPrix()) {
-				
-				PrixOut po  = new PrixOut();
-				po.setValeur(prix.getPrix());
-				prixOut.add(po);
-			}
-			p.setPrix(prixOut);
+			com.webcaisse.ws.model.ProduitOut p = new com.webcaisse.ws.model.ProduitOut();
+			p.setLibelle(produit.getLibelle());
+			
+			
 			produitsVo.add(p);
+			//List<PrixOut> prixOut  = new ArrayList<PrixOut>();
+			//for (Prix prix : produit.getPrix()) {
+			
+				//PrixOut po  = new PrixOut();
+				//po.setValeur(prix.getPrix());
+				//prixOut.add(po);
+			//}
+					
+			
+			//p.setPrix(prixOut);
+					
+//			for (Prix prix : produit.getPrix()){
+//		
+//			
+//			com.webcaisse.ws.model.ProduitOut p = new com.webcaisse.ws.model.ProduitOut();
+//			p.setDescription(produit.getDescription());
+//			p.setLibelle(produit.getLibelle());
+//			p.setQteStock(produit.getQteStock());
+//			p.setPrix(prix.getPrix());
+//			produitsVo.add(p);
+//			}
+			
+		
 		}
+			
+		
+		
 		return produitsVo;
 	}
 		
