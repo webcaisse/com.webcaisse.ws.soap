@@ -20,8 +20,8 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 	IProductDao productDao;
 
 	public List<com.webcaisse.ws.model.FamilleOut> getFamillesActivees() {
-		List<com.webcaisse.ws.model.FamilleOut> famillesVo  = new ArrayList<com.webcaisse.ws.model.FamilleOut>();
-		List<Famille> familles  = productDao.getFamillies();
+		List<com.webcaisse.ws.model.FamilleOut> famillesVo = new ArrayList<com.webcaisse.ws.model.FamilleOut>();
+		List<Famille> familles = productDao.getFamillies();
 		for (Famille famille : familles) {
 			com.webcaisse.ws.model.FamilleOut fam = new com.webcaisse.ws.model.FamilleOut();
 			fam.setLibelle(famille.getLibelle());
@@ -31,7 +31,8 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 		return famillesVo;
 	}
 
-	public List<com.webcaisse.ws.model.FamilleOut> getProduitParFamilleReference(String reference) {
+	public List<com.webcaisse.ws.model.FamilleOut> getProduitParFamilleReference(
+			String reference) {
 
 		System.out.println("je suis la dans le webservice");
 		// Famille famille = new Famille("Pizza",reference);
@@ -48,60 +49,88 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 		// prod2.setLibelle("Napolitaine");
 		// prod2.setPrix(20D);
 
-		//return null;// Arrays.asList(new Produit[]{prod1,prod2});
-		
+		// return null;// Arrays.asList(new Produit[]{prod1,prod2});
+
 		// pas d'implementation pour l'instant
-		
+
 		return null;
 	}
-	public Long ajouterProduit(ProduitIn p, Long idMenu){
-		//return productDao.ajouterProduit(p, idMenu);
+
+	public Long ajouterProduit(ProduitIn p, Long idMenu) {
+		// return productDao.ajouterProduit(p, idMenu);
 		return null;
 	}
-	public List<ProduitOut> getProductsByFamilly (Long familleId){
-		
-		
-		List<com.webcaisse.ws.model.ProduitOut> produitsVo  = new ArrayList<com.webcaisse.ws.model.ProduitOut>();
-		
-		List<Produit> produits  = productDao.getProductsByFamilly(familleId);
+
+	public List<ProduitOut> getProductsByFamilly(Long familleId) {
+
+		List<com.webcaisse.ws.model.ProduitOut> produitsVo = new ArrayList<com.webcaisse.ws.model.ProduitOut>();
+
+		List<Produit> produits = productDao.getProductsByFamilly(familleId);
 		for (Produit produit : produits) {
-			
+
 			com.webcaisse.ws.model.ProduitOut p = new com.webcaisse.ws.model.ProduitOut();
 			p.setLibelle(produit.getLibelle());
-			
-			
+			p.setId(produit.getId());
+
 			produitsVo.add(p);
-			//List<PrixOut> prixOut  = new ArrayList<PrixOut>();
-			//for (Prix prix : produit.getPrix()) {
-			
-				//PrixOut po  = new PrixOut();
-				//po.setValeur(prix.getPrix());
-				//prixOut.add(po);
-			//}
-					
-			
-			//p.setPrix(prixOut);
-					
-//			for (Prix prix : produit.getPrix()){
-//		
-//			
-//			com.webcaisse.ws.model.ProduitOut p = new com.webcaisse.ws.model.ProduitOut();
-//			p.setDescription(produit.getDescription());
-//			p.setLibelle(produit.getLibelle());
-//			p.setQteStock(produit.getQteStock());
-//			p.setPrix(prix.getPrix());
-//			produitsVo.add(p);
-//			}
-			
-		
+			// List<PrixOut> prixOut = new ArrayList<PrixOut>();
+			// for (Prix prix : produit.getPrix()) {
+
+			// PrixOut po = new PrixOut();
+			// po.setValeur(prix.getPrix());
+			// prixOut.add(po);
+			// }
+
+			// p.setPrix(prixOut);
+
+			// for (Prix prix : produit.getPrix()){
+			//
+			//
+			// com.webcaisse.ws.model.ProduitOut p = new
+			// com.webcaisse.ws.model.ProduitOut();
+			// p.setDescription(produit.getDescription());
+			// p.setLibelle(produit.getLibelle());
+			// p.setQteStock(produit.getQteStock());
+			// p.setPrix(prix.getPrix());
+			// produitsVo.add(p);
+			// }
+
 		}
-			
-		
-		
+
 		return produitsVo;
 	}
-		
-	}
-	
-	
 
+	public ProduitOut loadProductById(Long produitId) {
+
+		ProduitOut produitVo = null;
+
+		Produit produit = productDao.loadProductById(produitId);
+		
+		if (produit!=null){
+			produitVo = new ProduitOut();
+			// il faut setter les attributs de ProduitOut
+			produitVo.setLibelle(produit.getLibelle());
+			produitVo.setLibelle(produit.getLibelle());
+			produitVo.setId(produit.getId());
+			
+			List<PrixOut> prixOuts = new ArrayList<PrixOut>();
+			produitVo.setPrixOut(prixOuts);
+			
+			// mapping List<Prix> vers List<PrixOut>
+			List<Prix> listPrix  = produit.getPrix();
+			for (Prix prix : listPrix) {
+				PrixOut prixOut = new PrixOut();
+				
+				//recuperer le prix unitaire 
+				prixOut.setValeur(prix.getPrix());
+				
+				// ajout de prixOut a la list
+				produitVo.getPrixOut().add(prixOut);
+			}
+		}
+
+		return produitVo;
+
+	}
+
+}
