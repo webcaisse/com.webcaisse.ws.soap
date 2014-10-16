@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.webcaisse.dao.hibernate.IProductDao;
 import com.webcaisse.dao.hibernate.model.Famille;
+import com.webcaisse.dao.hibernate.model.Panier;
 import com.webcaisse.dao.hibernate.model.Prix;
 import com.webcaisse.dao.hibernate.model.Produit;
 import com.webcaisse.ws.interfaces.CaisseManagerService;
+import com.webcaisse.ws.model.PanierOut;
 import com.webcaisse.ws.model.PrixOut;
 import com.webcaisse.ws.model.ProduitIn;
 import com.webcaisse.ws.model.ProduitOut;
@@ -73,27 +75,7 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 			p.setId(produit.getId());
 
 			produitsVo.add(p);
-			// List<PrixOut> prixOut = new ArrayList<PrixOut>();
-			// for (Prix prix : produit.getPrix()) {
-
-			// PrixOut po = new PrixOut();
-			// po.setValeur(prix.getPrix());
-			// prixOut.add(po);
-			// }
-
-			// p.setPrix(prixOut);
-
-			// for (Prix prix : produit.getPrix()){
-			//
-			//
-			// com.webcaisse.ws.model.ProduitOut p = new
-			// com.webcaisse.ws.model.ProduitOut();
-			// p.setDescription(produit.getDescription());
-			// p.setLibelle(produit.getLibelle());
-			// p.setQteStock(produit.getQteStock());
-			// p.setPrix(prix.getPrix());
-			// produitsVo.add(p);
-			// }
+	
 
 		}
 
@@ -109,7 +91,6 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 		if (produit!=null){
 			produitVo = new ProduitOut();
 			// il faut setter les attributs de ProduitOut
-			produitVo.setLibelle(produit.getLibelle());
 			produitVo.setLibelle(produit.getLibelle());
 			produitVo.setId(produit.getId());
 			
@@ -133,4 +114,31 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 
 	}
 
+
+
+	public PanierOut ajouterProduitAuPanier(ProduitOut p, Long idPanier) {
+		PanierOut panierVo=null ; 
+		
+		Produit produit = new Produit () ;
+		Panier panier = productDao.ajouterProduitAuPanier(produit,idPanier) ;
+		
+		if(panier !=null){
+			
+			panierVo= new PanierOut() ;
+			panierVo.setQte(panier.getQte());
+			
+			List<ProduitOut> produitOuts = new ArrayList<ProduitOut>();
+			panierVo.setProduits(produitOuts);
+			
+			
+			panierVo.getProduits().add(p);
+			
+		}
+			
+		return panierVo ;	
+			
+	}
+
+	
+	
 }
