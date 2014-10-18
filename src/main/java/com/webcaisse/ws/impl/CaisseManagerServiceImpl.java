@@ -7,11 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.webcaisse.dao.hibernate.IProductDao;
 import com.webcaisse.dao.hibernate.model.Famille;
-import com.webcaisse.dao.hibernate.model.Panier;
 import com.webcaisse.dao.hibernate.model.Prix;
 import com.webcaisse.dao.hibernate.model.Produit;
 import com.webcaisse.ws.interfaces.CaisseManagerService;
-import com.webcaisse.ws.model.PanierOut;
 import com.webcaisse.ws.model.PrixOut;
 import com.webcaisse.ws.model.ProduitIn;
 import com.webcaisse.ws.model.ProduitOut;
@@ -116,28 +114,29 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 
 
 
-	public PanierOut ajouterProduitAuPanier(ProduitOut p, Long idPanier) {
-		PanierOut panierVo=null ; 
-		
-		Produit produit = new Produit () ;
-		Panier panier = productDao.ajouterProduitAuPanier(produit,idPanier) ;
-		
-		if(panier !=null){
-			
-			panierVo= new PanierOut() ;
-			panierVo.setQte(panier.getQte());
-			
-			List<ProduitOut> produitOuts = new ArrayList<ProduitOut>();
-			panierVo.setProduits(produitOuts);
-			
-			
-			panierVo.getProduits().add(p);
-			
-		}
-			
-		return panierVo ;	
-			
-	}
+//	public PanierOut ajouterProduitAuPanier(ProduitOut p, Long idPanier) {
+//		PanierOut panierVo=null ; 
+//		
+//		Produit produit = new Produit () ;
+//		Panier panier = productDao.ajouterProduitAuPanier(produit,idPanier) ;
+//		
+//		
+//			
+//		    panierVo= new PanierOut() ;
+//			panierVo.setQte(panier.getQte());
+//			panierVo.setLibelle(panier.getLibelle());
+//			
+//			//List<ProduitOut> produitOuts = new ArrayList<ProduitOut>();
+//			//panierVo.setProduits((List<ProduitOut>) p);
+//			
+//			
+//			panierVo.getProduits().add(p);
+//			
+//	
+//			
+//		return panierVo ;	
+//			
+//	}
 
 	
 	
