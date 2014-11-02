@@ -1,15 +1,24 @@
 package com.webcaisse.ws.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.webcaisse.dao.hibernate.IProductDao;
+import com.webcaisse.dao.hibernate.model.Commande;
 import com.webcaisse.dao.hibernate.model.Famille;
+import com.webcaisse.dao.hibernate.model.LigneCommande;
 import com.webcaisse.dao.hibernate.model.Prix;
 import com.webcaisse.dao.hibernate.model.Produit;
+import com.webcaisse.dao.hibernate.model.Session;
+import com.webcaisse.dao.hibernate.model.Societe;
+import com.webcaisse.dao.hibernate.model.User;
 import com.webcaisse.ws.interfaces.CaisseManagerService;
+import com.webcaisse.ws.model.CommandeIn;
+import com.webcaisse.ws.model.LigneCommandeIn;
+import com.webcaisse.ws.model.PanierOut;
 import com.webcaisse.ws.model.PrixOut;
 import com.webcaisse.ws.model.ProduitIn;
 import com.webcaisse.ws.model.ProduitOut;
@@ -112,31 +121,51 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 
 	}
 
+	public Long sauvegarderCommande(CommandeIn in) {
+		
+		List<LigneCommandeIn> listLigneCommandeIn  = in.getLignesCommandesIn() ;
+	
+		List<LigneCommande> lc = new ArrayList<LigneCommande> ();
+		
+		
+		
+		Commande commande = new  Commande() ;
+		Societe societe = new Societe ();
+		societe.setId(in.getIdSociete());
+		commande.setSociete(societe);
+		
+		Session session = new Session();
+		session.setSociete(societe);
+		User user = new User();
+		user.setId(in.getIdUser());
+		user.setSociete(societe);
+		session.setUser(user);
+		//session.setId(in.getIdSession());
+		commande.setSession(session);
+		for (LigneCommandeIn ligneCommandeIn : listLigneCommandeIn)	{
+	
+		
+			LigneCommande ligneCommande= new LigneCommande() ;
+			
+			
+		ligneCommande.setPrix(ligneCommandeIn.getPrix());
+		ligneCommande.setQte(ligneCommandeIn.getQuantite());
+		
+	
+		//ligneCommande.setCommande(commande);
+	     lc.add(ligneCommande) ;
+		//ligneCommande.setProduit(ligneCommandeIn.getIdProduit());		
+		//commande.getLigneCommandes().add(ligneCommande) ;
+		
+		}
+		
+		
+		commande.setLigneCommandes(lc);
+		return  productDao.sauvegarderCommande(commande) ;
+		
+		
+	}
 
-
-//	public PanierOut ajouterProduitAuPanier(ProduitOut p, Long idPanier) {
-//		PanierOut panierVo=null ; 
-//		
-//		Produit produit = new Produit () ;
-//		Panier panier = productDao.ajouterProduitAuPanier(produit,idPanier) ;
-//		
-//		
-//			
-//		    panierVo= new PanierOut() ;
-//			panierVo.setQte(panier.getQte());
-//			panierVo.setLibelle(panier.getLibelle());
-//			
-//			//List<ProduitOut> produitOuts = new ArrayList<ProduitOut>();
-//			//panierVo.setProduits((List<ProduitOut>) p);
-//			
-//			
-//			panierVo.getProduits().add(p);
-//			
-//	
-//			
-//		return panierVo ;	
-//			
-//	}
 
 	
 	
