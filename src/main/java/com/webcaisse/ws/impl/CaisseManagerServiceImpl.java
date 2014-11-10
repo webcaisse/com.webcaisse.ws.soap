@@ -28,9 +28,9 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 	@Autowired
 	IProductDao productDao;
 
-	public List<com.webcaisse.ws.model.FamilleOut> getFamillesActivees() {
+	public List<com.webcaisse.ws.model.FamilleOut> getFamillesActivees(Long idSociete) {
 		List<com.webcaisse.ws.model.FamilleOut> famillesVo = new ArrayList<com.webcaisse.ws.model.FamilleOut>();
-		List<Famille> familles = productDao.getFamillies();
+		List<Famille> familles = productDao.getFamillies(idSociete);
 		for (Famille famille : familles) {
 			com.webcaisse.ws.model.FamilleOut fam = new com.webcaisse.ws.model.FamilleOut();
 			fam.setLibelle(famille.getLibelle());
@@ -111,6 +111,8 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 				
 				//recuperer le prix unitaire 
 				prixOut.setValeur(prix.getPrix());
+				
+				prixOut.setIdPrix(prix.getId());
 				
 				// ajout de prixOut a la list
 				produitVo.getPrixOut().add(prixOut);
