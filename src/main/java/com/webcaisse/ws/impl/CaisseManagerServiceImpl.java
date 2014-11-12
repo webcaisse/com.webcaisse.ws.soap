@@ -35,6 +35,7 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 			com.webcaisse.ws.model.FamilleOut fam = new com.webcaisse.ws.model.FamilleOut();
 			fam.setLibelle(famille.getLibelle());
 			fam.setId(famille.getId());
+			fam.setCouleur(famille.getCouleur());
 			famillesVo.add(fam);
 		}
 		return famillesVo;
@@ -80,6 +81,7 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 			com.webcaisse.ws.model.ProduitOut p = new com.webcaisse.ws.model.ProduitOut();
 			p.setLibelle(produit.getLibelle());
 			p.setId(produit.getId());
+			p.setCouleur(produit.getCouleur());
 
 			produitsVo.add(p);
 	
@@ -100,6 +102,7 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 			// il faut setter les attributs de ProduitOut
 			produitVo.setLibelle(produit.getLibelle());
 			produitVo.setId(produit.getId());
+			produitVo.setCouleur(produit.getCouleur());
 			
 			List<PrixOut> prixOuts = new ArrayList<PrixOut>();
 			produitVo.setPrixOut(prixOuts);
