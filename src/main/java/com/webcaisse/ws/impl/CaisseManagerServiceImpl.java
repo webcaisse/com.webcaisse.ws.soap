@@ -1,12 +1,12 @@
 package com.webcaisse.ws.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.webcaisse.dao.hibernate.IProductDao;
+import com.webcaisse.dao.hibernate.ISocieteDao;
 import com.webcaisse.dao.hibernate.model.Commande;
 import com.webcaisse.dao.hibernate.model.Famille;
 import com.webcaisse.dao.hibernate.model.LigneCommande;
@@ -18,7 +18,6 @@ import com.webcaisse.dao.hibernate.model.User;
 import com.webcaisse.ws.interfaces.CaisseManagerService;
 import com.webcaisse.ws.model.CommandeIn;
 import com.webcaisse.ws.model.LigneCommandeIn;
-import com.webcaisse.ws.model.PanierOut;
 import com.webcaisse.ws.model.PrixOut;
 import com.webcaisse.ws.model.ProduitIn;
 import com.webcaisse.ws.model.ProduitOut;
@@ -27,6 +26,9 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 
 	@Autowired
 	IProductDao productDao;
+	
+	@Autowired 
+	ISocieteDao societeDao;
 
 	public List<com.webcaisse.ws.model.FamilleOut> getFamillesActivees(Long idSociete) {
 		List<com.webcaisse.ws.model.FamilleOut> famillesVo = new ArrayList<com.webcaisse.ws.model.FamilleOut>();
@@ -126,46 +128,57 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 
 	}
 
-	public Long sauvegarderCommande(CommandeIn in) {
+	public Long sauvegarderCommande(CommandeIn in    ) {
 		
 		List<LigneCommandeIn> listLigneCommandeIn  = in.getLignesCommandesIn() ;
 	
 		List<LigneCommande> lc = new ArrayList<LigneCommande> ();
 		
-		
+		Session session = societeDao.loadSessionById(in.getIdSession());
 		
 		Commande commande = new  Commande() ;
-		Societe societe = new Societe ();
-		societe.setId(in.getIdSociete());
-		commande.setSociete(societe);
 		
-		Session session = new Session();
-		session.setSociete(societe);
-		User user = new User();
-		user.setId(in.getIdUser());
-		user.setSociete(societe);
-		session.setUser(user);
+		//Societe societe = societeDao.loadById(in.getIdSociete());
+		
+		// load societe par son id
+		commande.setSociete(session.getSociete());
+		
+		
+	//	session.setSociete(societe);
+//		User user = new User();
+//		user.setId(in.getIdUser());
+//		user.setSociete(societe);
+//		session.setUser(user);
 		//session.setId(in.getIdSession());
 		commande.setSession(session);
+		
+//		Produit produit = new Produit() ;
+		
+		
+	
 		for (LigneCommandeIn ligneCommandeIn : listLigneCommandeIn)	{
 	
-		
-			LigneCommande ligneCommande= new LigneCommande() ;
 			
-			
-		ligneCommande.setPrix(ligneCommandeIn.getPrix());
-		ligneCommande.setQte(ligneCommandeIn.getQuantite());
+			LigneCommande ligneCommande= new LigneCommande() ;	
 		
-	
-		//ligneCommande.setCommande(commande);
-	     lc.add(ligneCommande) ;
-		//ligneCommande.setProduit(ligneCommandeIn.getIdProduit());		
-		//commande.getLigneCommandes().add(ligneCommande) ;
+		    ligneCommande.setPrix(ligneCommandeIn.getPrix());
+		    ligneCommande.setCommande(commande);
+		    
+		    // en ffaite ici il faut appler le dao productDao pour obtenit le produit a partir de son id  et le setter apres dans la commande
+		    Produit produit = productDao.loadProductById(ligneCommandeIn.getIdProduit());
+		    ligneCommande.setProduit(produit);
+		    ligneCommande.setQte(ligneCommandeIn.getQuantite());
+		    ligneCommande.setTotale(ligneCommandeIn.getPrix()*ligneCommandeIn.getQuantite());
+		    
+	        lc.add(ligneCommande) ;
 		
 		}
 		
 		
 		commande.setLigneCommandes(lc);
+		commande.setMode(in.getMode());
+		commande.setMontant(in.getMontant());
+		commande.setCommentaire(in.getNotes());
 		return  productDao.sauvegarderCommande(commande) ;
 		
 		
