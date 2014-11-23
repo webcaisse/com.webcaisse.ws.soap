@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.webcaisse.dao.hibernate.IProductDao;
+import com.webcaisse.dao.hibernate.ISessionDao;
 import com.webcaisse.dao.hibernate.ISocieteDao;
 import com.webcaisse.dao.hibernate.model.Commande;
 import com.webcaisse.dao.hibernate.model.Famille;
@@ -29,6 +30,9 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 	
 	@Autowired 
 	ISocieteDao societeDao;
+	
+	@Autowired 
+	ISessionDao sessionDao;
 
 	public List<com.webcaisse.ws.model.FamilleOut> getFamillesActivees(Long idSociete) {
 		List<com.webcaisse.ws.model.FamilleOut> famillesVo = new ArrayList<com.webcaisse.ws.model.FamilleOut>();
@@ -134,7 +138,7 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 	
 		List<LigneCommande> lc = new ArrayList<LigneCommande> ();
 		
-		Session session = societeDao.loadSessionById(in.getIdSession());
+		Session session = sessionDao.loadSessionById(in.getIdSession());
 		
 		Commande commande = new  Commande() ;
 		

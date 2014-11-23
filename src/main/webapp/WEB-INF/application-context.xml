@@ -19,10 +19,15 @@
 	<!-- End points -->
 
 	<bean name="wcBean" class="com.webcaisse.ws.impl.CaisseManagerServiceImpl" />
-
-	<!-- End points -->
+	
+	
 	<jaxws:endpoint id="gestionCaisse" implementor="#wcBean"
 		address="/gestionCaisse" />
+		
+    <bean name="wcBean1" class="com.webcaisse.ws.impl.CommandeManagerServiceImpl" />
+	<!-- End points -->
+	<jaxws:endpoint id="gestionCommande" implementor="#wcBean1"
+		address="/gestionCommande" />
 
 	<bean name="authenticationService" class="com.webcaisse.ws.impl.AuthentificationServiceImpl"></bean>
 
