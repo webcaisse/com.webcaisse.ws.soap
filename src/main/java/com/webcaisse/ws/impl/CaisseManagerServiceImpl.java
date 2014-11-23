@@ -141,7 +141,6 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 		Session session = sessionDao.loadSessionById(in.getIdSession());
 		
 		Commande commande = new  Commande() ;
-<<<<<<< HEAD
 		
 		//Societe societe = societeDao.loadById(in.getIdSociete());
 		
@@ -154,18 +153,6 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 //		user.setId(in.getIdUser());
 //		user.setSociete(societe);
 //		session.setUser(user);
-=======
-		Societe societe = new Societe ();
-		societe.setId(in.getIdSociete().longValue());
-		commande.setSociete(societe);
-		
-		Session session = new Session();
-		session.setSociete(societe);
-		User user = new User();
-		user.setId(in.getIdUser());
-		user.setSociete(societe);
-		session.setUser(user);
->>>>>>> dev
 		//session.setId(in.getIdSession());
 		commande.setSession(session);
 		
