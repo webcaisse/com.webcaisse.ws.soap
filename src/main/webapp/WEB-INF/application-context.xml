@@ -16,21 +16,29 @@
 	<import resource="classpath:dao.hibernate.component.xml" />
 
 
-	<!-- End points -->
+
 
 	<bean name="wcBean" class="com.webcaisse.ws.impl.CaisseManagerServiceImpl" />
+	<bean name="wcBean1" class="com.webcaisse.ws.impl.CommandeManagerServiceImpl" />
+	<bean name="wcBean2" class="com.webcaisse.ws.impl.ClientManagerServiceImpl" />
+	<bean name="authenticationService" class="com.webcaisse.ws.impl.AuthentificationServiceImpl"></bean>
 	
 	
+	<!-- End points -->
 	<jaxws:endpoint id="gestionCaisse" implementor="#wcBean"
 		address="/gestionCaisse" />
 		
-    <bean name="wcBean1" class="com.webcaisse.ws.impl.CommandeManagerServiceImpl" />
-	<!-- End points -->
+    
+		<!-- End points -->
 	<jaxws:endpoint id="gestionCommande" implementor="#wcBean1"
 		address="/gestionCommande" />
+		
+		<!-- End points -->
+	<jaxws:endpoint id="gestionClient" implementor="#wcBean2"
+		address="/gestionClient" />
 
-	<bean name="authenticationService" class="com.webcaisse.ws.impl.AuthentificationServiceImpl"></bean>
-
+	
+	    <!-- End points -->
 	<jaxws:endpoint id="authentification" implementor="#authenticationService"
 		address="/authentification" />
 </beans>
