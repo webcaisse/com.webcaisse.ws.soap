@@ -1,6 +1,7 @@
 package com.webcaisse.ws.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,31 @@ public class CommandeManagerServiceImpl implements CommandeManagerService{
 		
 		
 		
+		return commandeVo ;
+	}
+
+	public List<CommandeOut> rechercherCommandeParDate(Long idSociete,Date dateCommande) {
+            List<CommandeOut> commandeVo = new ArrayList<CommandeOut>() ;
+		
+		List<Commande> commandes = sessionDao.rechercherCommandeParDate(idSociete,dateCommande) ;
+		
+		CommandeOut c = new CommandeOut() ;
+		
+		StringBuffer sb = new StringBuffer() ;
+		for (Commande commande : commandes) {
+			  List<LigneCommande> ligneCommandes = commande.getLigneCommandes() ;
+				  for (LigneCommande ligneCommande : ligneCommandes) {
+					  
+					   sb.append(ligneCommande.getProduit().getLibelle()).append(" ") ;
+					 
+					  
+				}
+				        
+				c.setLibelleProduit(sb.toString());
+				c.setDateCommande(commande.getDateCommande());
+				c.setEtat(commande.getEtat());
+				commandeVo.add(c) ;
+			}
 		return commandeVo ;
 	}
 
