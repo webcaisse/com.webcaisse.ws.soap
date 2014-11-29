@@ -1,6 +1,7 @@
 package com.webcaisse.ws.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,6 @@ import com.webcaisse.dao.hibernate.model.LigneCommande;
 import com.webcaisse.dao.hibernate.model.Prix;
 import com.webcaisse.dao.hibernate.model.Produit;
 import com.webcaisse.dao.hibernate.model.Session;
-import com.webcaisse.dao.hibernate.model.Societe;
-import com.webcaisse.dao.hibernate.model.User;
 import com.webcaisse.ws.interfaces.CaisseManagerService;
 import com.webcaisse.ws.model.CommandeIn;
 import com.webcaisse.ws.model.LigneCommandeIn;
@@ -141,6 +140,7 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 		Session session = sessionDao.loadSessionById(in.getIdSession());
 		
 		Commande commande = new  Commande() ;
+		commande.setDateCommande(new Date());
 		
 		//Societe societe = societeDao.loadById(in.getIdSociete());
 		
