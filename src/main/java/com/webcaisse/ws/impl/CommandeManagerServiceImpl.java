@@ -44,14 +44,12 @@ public class CommandeManagerServiceImpl implements CommandeManagerService {
 		CommandeOut c = new CommandeOut();
 
 		StringBuffer sb = new StringBuffer();
-		Integer indexLp = 1;
 
 		for (Commande commande : commandes) {
 			List<LigneCommande> ligneCommandes = commande.getLigneCommandes();
 			for (LigneCommande ligneCommande : ligneCommandes) {
-				sb.append(indexLp+" :) ");
+				sb.append("(" + ligneCommande.getQte()+") ");
 				sb.append(ligneCommande.getProduit().getLibelle()).append(" ");
-				indexLp++;
 			}
 
 			c.setLibelleProduit(sb.toString());
