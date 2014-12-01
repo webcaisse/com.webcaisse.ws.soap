@@ -15,6 +15,7 @@ import com.webcaisse.dao.hibernate.model.LigneCommande;
 import com.webcaisse.dao.hibernate.model.Prix;
 import com.webcaisse.dao.hibernate.model.Produit;
 import com.webcaisse.dao.hibernate.model.Session;
+import com.webcaisse.dao.hibernate.model.Societe;
 import com.webcaisse.ws.interfaces.CaisseManagerService;
 import com.webcaisse.ws.model.CommandeIn;
 import com.webcaisse.ws.model.LigneCommandeIn;
@@ -71,11 +72,7 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 		return null;
 	}
 
-	public Long ajouterProduit(ProduitIn p, Long idMenu) {
-		// return productDao.ajouterProduit(p, idMenu);
-		return null;
-	}
-
+	
 	public List<ProduitOut> getProductsByFamilly(Long familleId) {
 
 		List<com.webcaisse.ws.model.ProduitOut> produitsVo = new ArrayList<com.webcaisse.ws.model.ProduitOut>();
@@ -108,7 +105,7 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 			produitVo.setLibelle(produit.getLibelle());
 			produitVo.setId(produit.getId());
 			produitVo.setCouleur(produit.getCouleur());
-			
+			produitVo.setFamilleId(produit.getFamille().getId());
 			List<PrixOut> prixOuts = new ArrayList<PrixOut>();
 			produitVo.setPrixOut(prixOuts);
 			
@@ -188,6 +185,26 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 		
 	}
 
+	public Long ajouterProduit(ProduitIn p, Long idFamilly) {
+		
+		Produit produit = new Produit() ;
+		
+		
+		produit.setLibelle(p.getLibelle());
+		produit.setCode(p.getCode());
+		
+		 return productDao.ajouterProduit(produit, idFamilly);
+		
+	}
+
+	/**
+	 * Supprimer un produit de la BDD
+	 */
+	public void supprimerProduit(Long idProduit) {
+		
+		productDao.supprimerProduit(idProduit);
+		
+	}
 
 	
 	

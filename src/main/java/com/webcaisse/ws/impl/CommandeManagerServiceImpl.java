@@ -40,8 +40,7 @@ public class CommandeManagerServiceImpl implements CommandeManagerService {
 		return commandeVo;
 	}
 
-	private void pouplateCommandeOut(List<CommandeOut> commandeVo,
-			List<Commande> commandes) {
+	private void pouplateCommandeOut(List<CommandeOut> commandeVo,List<Commande> commandes) {
 		CommandeOut c = new CommandeOut();
 
 		StringBuffer sb = new StringBuffer();

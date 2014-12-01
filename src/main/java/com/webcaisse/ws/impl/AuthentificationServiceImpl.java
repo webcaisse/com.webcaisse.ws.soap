@@ -1,7 +1,7 @@
 package com.webcaisse.ws.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import com.webcaisse.dao.hibernate.IAuthentification;
 import com.webcaisse.dao.hibernate.model.User;
@@ -13,7 +13,7 @@ public class AuthentificationServiceImpl implements AuthentificationService {
 	@Autowired
 	IAuthentification  authentificationDao;
 	
-	@Transactional
+	
 	public UserOut getAuthentification(String userName, String password, String codeSociete) {
 		UserOut userVo = null;
 		User user =  authentificationDao.getAuthentification( userName, password, codeSociete);
