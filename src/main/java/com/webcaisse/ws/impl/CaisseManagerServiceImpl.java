@@ -185,7 +185,7 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 		
 	}
 
-	public Long ajouterProduit(ProduitIn p, Long idFamilly) {
+	public void ajouterProduit(ProduitIn p, Long idFamilly) {
 		
 		Produit produit = new Produit() ;
 		
@@ -193,7 +193,7 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 		produit.setLibelle(p.getLibelle());
 		produit.setCode(p.getCode());
 		
-		 return productDao.ajouterProduit(produit, idFamilly);
+		productDao.ajouterProduit(produit, idFamilly);
 		
 	}
 
