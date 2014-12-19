@@ -28,5 +28,24 @@ public class AuthentificationServiceImpl implements AuthentificationService {
 		return userVo;
 	}
 
+   public UserOut findByUserName(String userName){
+	   UserOut userVo = null;
+	   User user = authentificationDao.finByUserName(userName) ;
+	   
+	   if (user !=null){
+			userVo = new UserOut();
+			userVo.setUsername(user.getUsername());
+			userVo.setPassword(user.getPassword());
+		}
+		return userVo;
+	   
+
+   }	   
+	   
+	   
+	   
+   }
 	
-}
+	
+	
+
