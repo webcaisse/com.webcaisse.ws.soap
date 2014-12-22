@@ -142,7 +142,7 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 		//Societe societe = societeDao.loadById(in.getIdSociete());
 		
 		// load societe par son id
-		commande.setSociete(session.getSociete());
+		commande.setSociete(session.getUser().getSociete());
 		
 		
 	//	session.setSociete(societe);
