@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.webcaisse.dao.hibernate.ISessionDao;
 import com.webcaisse.dao.hibernate.model.Commande;
 import com.webcaisse.dao.hibernate.model.LigneCommande;
-import com.webcaisse.dao.hibernate.model.Produit;
 import com.webcaisse.ws.interfaces.CommandeManagerService;
 import com.webcaisse.ws.model.CommandeOut;
 
