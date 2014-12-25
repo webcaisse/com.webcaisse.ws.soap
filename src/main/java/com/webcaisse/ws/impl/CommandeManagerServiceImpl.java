@@ -40,21 +40,26 @@ public class CommandeManagerServiceImpl implements CommandeManagerService {
 	}
 
 	private void pouplateCommandeOut(List<CommandeOut> commandeVo,List<Commande> commandes) {
-		CommandeOut c = new CommandeOut();
+		//CommandeOut c = new CommandeOut();
 
 		StringBuffer sb = new StringBuffer();
+		int index=1 ;
 
 		for (Commande commande : commandes) {
+			CommandeOut c = new CommandeOut();
+			
 			List<LigneCommande> ligneCommandes = commande.getLigneCommandes();
 			for (LigneCommande ligneCommande : ligneCommandes) {
-				sb.append("(" + ligneCommande.getQte()+") ");
+				sb.append("(" +index+") ");
 				sb.append(ligneCommande.getProduit().getLibelle()).append(" ");
+				index++ ;
 			}
 
 			c.setLibelleProduit(sb.toString());
 			c.setDateCommande(commande.getDateCommande());
 			c.setEtat(commande.getEtat());
 			commandeVo.add(c);
+			sb.delete(0,sb.length());index=1 ;
 		}
 	}
 
