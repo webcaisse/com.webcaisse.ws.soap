@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.webcaisse.dao.hibernate.ISessionDao;
 import com.webcaisse.dao.hibernate.model.Session;
-
 import com.webcaisse.ws.interfaces.SessionManagerService;
 
 public class SessionManagerServiceImpl implements SessionManagerService {
@@ -25,6 +24,19 @@ public class SessionManagerServiceImpl implements SessionManagerService {
 			Long idSession = sessionDao.creerSession(idUser, new Date());
 			return idSession;
 		}
+	}
+
+	public void fermerSession(Long idSession) {
+		
+		Session session = sessionDao.loadSessionById (idSession) ;
+		if (session!=null){
+			
+			session.setEtat('F');
+			session.setDateFermeture(new Date());
+			sessionDao.updateSession(session);
+		}
+		
+		
 	}
 
 }
