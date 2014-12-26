@@ -36,6 +36,7 @@ public class AuthentificationServiceImpl implements AuthentificationService {
 			userVo = new UserOut();
 			userVo.setUsername(user.getUsername());
 			userVo.setPassword(user.getPassword());
+			userVo.setSocieteId(user.getSociete().getId());
 			userVo.setId(user.getId());
 		}
 		return userVo;
