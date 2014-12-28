@@ -84,7 +84,7 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 			p.setLibelle(produit.getLibelle());
 			p.setId(produit.getId());
 			p.setCouleur(produit.getCouleur());
-
+			p.setCode(produit.getCode());
 			produitsVo.add(p);
 	
 
@@ -103,6 +103,7 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 			produitVo = new ProduitOut();
 			// il faut setter les attributs de ProduitOut
 			produitVo.setLibelle(produit.getLibelle());
+			produitVo.setCode(produit.getCode());
 			produitVo.setId(produit.getId());
 			produitVo.setCouleur(produit.getCouleur());
 			produitVo.setFamilleId(produit.getFamille().getId());
@@ -185,15 +186,19 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 		
 	}
 
-	public void ajouterProduit(ProduitIn p, Long idFamilly) {
+	public void ajouterProduit(ProduitIn p) {
 		
 		Produit produit = new Produit() ;
+		Famille famille = new Famille() ;
 		
 		
 		produit.setLibelle(p.getLibelle());
 		produit.setCode(p.getCode());
+		famille.setId(p.getFamilleId());
 		
-		productDao.ajouterProduit(produit, idFamilly);
+		produit.setFamille(famille);
+			
+		productDao.ajouterProduit(produit);
 		
 	}
 
@@ -205,6 +210,20 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 		productDao.supprimerProduit(idProduit);
 		
 	}
+
+	public void updateProduit(ProduitIn p) {
+		
+		Produit produit = productDao.loadProductById(p.getId());
+	
+       produit.setLibelle(p.getLibelle());
+       produit.setCode(p.getCode());
+
+		
+		productDao.updateProduit(produit);
+		
+	}
+
+	
 
 	
 	
