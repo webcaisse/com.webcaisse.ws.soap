@@ -22,6 +22,7 @@
 	<bean name="wcBean1" class="com.webcaisse.ws.impl.CommandeManagerServiceImpl" />
 	<bean name="wcBean2" class="com.webcaisse.ws.impl.ClientManagerServiceImpl" />
 	<bean name="authenticationService" class="com.webcaisse.ws.impl.AuthentificationServiceImpl"></bean>
+	<bean name="parametreService" class="com.webcaisse.ws.impl.ParametreManagerServiceImpl"></bean>
 	<bean name="sessionService" class="com.webcaisse.ws.impl.SessionManagerServiceImpl"></bean>
 	
 	
@@ -46,5 +47,9 @@
 		<!-- End points -->
 	<jaxws:endpoint id="session" implementor="#sessionService"
 		address="/session" />
+		
+		<!-- End points -->
+	<jaxws:endpoint id="parametre" implementor="#parametreService"
+		address="/parametre" />
 		
 </beans>

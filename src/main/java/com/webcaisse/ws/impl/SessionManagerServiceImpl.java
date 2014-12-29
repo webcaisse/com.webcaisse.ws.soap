@@ -16,8 +16,7 @@ public class SessionManagerServiceImpl implements SessionManagerService {
 	public Long ouvrirSession(Long idUser) {
 
 		// 1 - recuperation de session
-		Session session = sessionDao.getSessionByUserIdAndDate(idUser,
-				new Date());
+		Session session = (Session) sessionDao.getSessionByUserIdAndDate(idUser,new Date());
 		if (session != null) {
 			return session.getId();
 		} else {
