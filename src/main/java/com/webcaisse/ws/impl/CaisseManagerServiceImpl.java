@@ -18,6 +18,8 @@ import com.webcaisse.dao.hibernate.model.Session;
 import com.webcaisse.dao.hibernate.model.Societe;
 import com.webcaisse.ws.interfaces.CaisseManagerService;
 import com.webcaisse.ws.model.CommandeIn;
+import com.webcaisse.ws.model.FamilleIn;
+import com.webcaisse.ws.model.FamilleOut;
 import com.webcaisse.ws.model.LigneCommandeIn;
 import com.webcaisse.ws.model.PrixOut;
 import com.webcaisse.ws.model.ProduitIn;
@@ -223,7 +225,49 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 		
 	}
 
+	public void ajouterFamille(FamilleIn f) {
+		
+		Famille famille = new Famille () ;
+		Societe societe = new Societe() ;
+		societe.setId(f.getIdSociete());
+		famille.setLibelle(f.getLibelle());
+		famille.setCouleur(f.getColor());
+		famille.setSociete(societe);
+		
+	    productDao.ajouterFamille(famille);
+			
+	}
+
+	public void supprimerFamille(Long idFamille) {
 	
+		productDao.supprimerFamille(idFamille);
+	}
+
+	public void updateFamille(FamilleIn f) {
+		
+		Famille  famille = productDao.loadFamilleById(f.getId()) ;
+		famille.setLibelle(f.getLibelle());
+		famille.setCouleur(f.getColor());
+		
+		productDao.updateFamille(famille);
+	}
+
+	public FamilleOut loadFamilleById(Long IdFamille) {
+		
+		FamilleOut familleVo = null;
+
+		Famille famille = productDao.loadFamilleById(IdFamille);
+		
+		if (famille!=null){
+			familleVo = new FamilleOut();
+			
+			familleVo.setLibelle(famille.getLibelle()) ;
+			familleVo.setCouleur(famille.getCouleur());
+		
+	}
+
+	return familleVo ;
+	}
 
 	
 	
