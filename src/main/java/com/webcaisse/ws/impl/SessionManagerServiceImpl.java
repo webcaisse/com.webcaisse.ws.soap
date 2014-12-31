@@ -1,8 +1,10 @@
 package com.webcaisse.ws.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 
 import com.webcaisse.dao.hibernate.ISessionDao;
 import com.webcaisse.dao.hibernate.model.Session;
@@ -16,9 +18,10 @@ public class SessionManagerServiceImpl implements SessionManagerService {
 	public Long ouvrirSession(Long idUser) {
 
 		// 1 - recuperation de session
-		Session session =  sessionDao.getSessionByUserIdAndDate(idUser,new Date());
-		if (session != null) {
-			return session.getId();
+		List<Session> sessions = sessionDao.getSessionByUserIdAndDate(idUser,
+				new Date());
+		if (!CollectionUtils.isEmpty(sessions)) {
+			return sessions.get(0).getId();
 		} else {
 			Long idSession = sessionDao.creerSession(idUser, new Date());
 			return idSession;
@@ -34,8 +37,6 @@ public class SessionManagerServiceImpl implements SessionManagerService {
 			session.setDateFermeture(new Date());
 			sessionDao.updateSession(session);
 		}
-		
-		
 	}
 
 }
