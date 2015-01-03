@@ -20,23 +20,22 @@ public class ParametreManagerServiceImpl implements ParametreManagerService {
 	@Autowired
 	ISocieteDao societeDao ;
 	
-	public void sauvegarderParametre(List<ParametreIn> parametres) {
+	public void sauvegarderParametre(ParametreIn parametre) {
 		
-		
-		
-		for (ParametreIn parametreIn : parametres) {
+	
 			Reference reference = new Reference () ; 
 		
-			Societe societe = societeDao.loadById(parametreIn.getIdSociete());
+			Societe societe = societeDao.loadById(parametre.getIdSociete());
 			
-			reference.setDateCrea(parametreIn.getDateCrea());
-			reference.setDateModif(parametreIn.getDateModif());
-			reference.setNomParametre(parametreIn.getNomParametre());
-			reference.setValeur(parametreIn.getValeur());
+			//reference.setDateCrea(parametre.getDateCrea());
+			//reference.setDateModif(parametre.getDateModif());
+			reference.setNomParametre(parametre.getNomParametre());
+			//reference.setValeur(parametre.getValeur());
 			reference.setSociete(societe);
+			
 			parametreDao.sauvgarderParametre(reference);
 			
-		}
+		
 		
 			
 		
