@@ -10,8 +10,12 @@ import com.webcaisse.dao.hibernate.IParametreDao;
 import com.webcaisse.dao.hibernate.ISocieteDao;
 import com.webcaisse.dao.hibernate.model.Reference;
 import com.webcaisse.dao.hibernate.model.Societe;
+import com.webcaisse.dao.hibernate.model.User;
 import com.webcaisse.ws.interfaces.ParametreManagerService;
+import com.webcaisse.ws.model.ClientOut;
 import com.webcaisse.ws.model.ParametreIn;
+import com.webcaisse.ws.model.UserIn;
+import com.webcaisse.ws.model.UserOut;
 
 public class ParametreManagerServiceImpl implements ParametreManagerService {
 
@@ -24,8 +28,7 @@ public class ParametreManagerServiceImpl implements ParametreManagerService {
 	public void sauvegarderParametre(ParametreIn parametre) {
 
 		// je verifie si ce parametre existe deja dans la base
-		Reference reference = parametreDao.getReferenceByName(parametre
-				.getNomParametre());
+		Reference reference = parametreDao.getReferenceByName(parametre.getNomParametre());
 		if (reference == null) {
 			// création
 			reference = new Reference();
@@ -39,6 +42,42 @@ public class ParametreManagerServiceImpl implements ParametreManagerService {
 		}
 		parametreDao.sauvgarderParametre(reference);
 
+	}
+
+	public void sauvegarderUser(UserIn userIn) {
+		
+		User user = new User () ;
+		Societe societe = new Societe () ;
+		societe.setId(userIn.getSocieteId());
+		
+		user.setNom(userIn.getNom());
+		user.setPrenom(userIn.getPrenom()) ;
+		user.setAdresse(userIn.getAdresse());
+		user.setTelephone(userIn.getTelephone());
+		user.setUsername(userIn.getUsername());
+		user.setPassword(userIn.getPassword());
+		user.setSociete(societe);
+		
+		parametreDao.sauvegarderUser(user);
+		
+	}
+
+	public List<UserOut> rechercherUser(Long idSociete) {
+		List<UserOut> userVo = new ArrayList<UserOut>();
+		List<User> users = parametreDao.rechercherUser(idSociete) ;
+		
+		for (User user : users) {
+			UserOut  userOut = new UserOut() ;
+			
+			userOut.setNom(user.getNom());
+			userOut.setPrenom(user.getPrenom());
+			userOut.setAdresse(user.getAdresse());
+			
+			userVo.add(userOut) ;
+		}
+		
+		
+		return userVo;
 	}
 
 }
