@@ -15,15 +15,13 @@
 	<!-- dao beans -->
 	<import resource="classpath:dao.hibernate.component.xml" />
 
-
-
-
 	<bean name="wcBean" class="com.webcaisse.ws.impl.CaisseManagerServiceImpl" />
 	<bean name="wcBean1" class="com.webcaisse.ws.impl.CommandeManagerServiceImpl" />
 	<bean name="wcBean2" class="com.webcaisse.ws.impl.ClientManagerServiceImpl" />
-	<bean name="authenticationService" class="com.webcaisse.ws.impl.AuthentificationServiceImpl"></bean>
-	<bean name="parametreService" class="com.webcaisse.ws.impl.ParametreManagerServiceImpl"></bean>
-	<bean name="sessionService" class="com.webcaisse.ws.impl.SessionManagerServiceImpl"></bean>
+	<bean name="authenticationService" class="com.webcaisse.ws.impl.AuthentificationServiceImpl"/>
+	<bean name="parametreService" class="com.webcaisse.ws.impl.ParametreManagerServiceImpl"/>
+	<bean name="sessionService" class="com.webcaisse.ws.impl.SessionManagerServiceImpl"/>
+	<bean name="userService" class="com.webcaisse.ws.impl.UserManagerServiceImpl"/>
 	
 	
 	<!-- End points -->
@@ -51,5 +49,10 @@
 		<!-- End points -->
 	<jaxws:endpoint id="parametre" implementor="#parametreService"
 		address="/parametre" />
+		
+		
+		<!-- End points -->
+	<jaxws:endpoint id="users" implementor="#userService"
+		address="/user" />
 		
 </beans>

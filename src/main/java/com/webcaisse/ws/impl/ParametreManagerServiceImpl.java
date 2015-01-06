@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.webcaisse.dao.hibernate.IParametreDao;
 import com.webcaisse.dao.hibernate.ISocieteDao;
+import com.webcaisse.dao.hibernate.model.Profil;
 import com.webcaisse.dao.hibernate.model.Reference;
 import com.webcaisse.dao.hibernate.model.Societe;
 import com.webcaisse.dao.hibernate.model.User;
 import com.webcaisse.ws.interfaces.ParametreManagerService;
-import com.webcaisse.ws.model.ClientOut;
 import com.webcaisse.ws.model.ParametreIn;
 import com.webcaisse.ws.model.UserIn;
 import com.webcaisse.ws.model.UserOut;
@@ -50,6 +50,9 @@ public class ParametreManagerServiceImpl implements ParametreManagerService {
 		Societe societe = new Societe () ;
 		societe.setId(userIn.getSocieteId());
 		
+		Profil profil = new Profil();
+		profil.setId(userIn.getProfil());
+		
 		user.setNom(userIn.getNom());
 		user.setPrenom(userIn.getPrenom()) ;
 		user.setAdresse(userIn.getAdresse());
@@ -57,7 +60,8 @@ public class ParametreManagerServiceImpl implements ParametreManagerService {
 		user.setUsername(userIn.getUsername());
 		user.setPassword(userIn.getPassword());
 		user.setSociete(societe);
-		
+		user.setProfil(profil);
+		user.setActif(userIn.getEnabled());
 		parametreDao.sauvegarderUser(user);
 		
 	}
