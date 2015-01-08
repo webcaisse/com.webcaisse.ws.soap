@@ -22,6 +22,7 @@
 	<bean name="parametreService" class="com.webcaisse.ws.impl.ParametreManagerServiceImpl"/>
 	<bean name="sessionService" class="com.webcaisse.ws.impl.SessionManagerServiceImpl"/>
 	<bean name="userService" class="com.webcaisse.ws.impl.UserManagerServiceImpl"/>
+	<bean name="livreurService" class="com.webcaisse.ws.impl.LivreurManagerServiceImpl"/>
 	
 	
 	<!-- End points -->
@@ -54,5 +55,9 @@
 		<!-- End points -->
 	<jaxws:endpoint id="users" implementor="#userService"
 		address="/user" />
+		
+		<!-- End points -->
+	<jaxws:endpoint id="livreur" implementor="#livreurService"
+		address="/livreur" />
 		
 </beans>
