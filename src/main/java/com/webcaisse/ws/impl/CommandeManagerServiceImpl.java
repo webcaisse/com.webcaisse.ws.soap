@@ -6,16 +6,24 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.webcaisse.dao.hibernate.ICommandeDao;
 import com.webcaisse.dao.hibernate.ISessionDao;
+import com.webcaisse.dao.hibernate.model.Client;
 import com.webcaisse.dao.hibernate.model.Commande;
 import com.webcaisse.dao.hibernate.model.LigneCommande;
 import com.webcaisse.ws.interfaces.CommandeManagerService;
+import com.webcaisse.ws.model.ClientOut;
 import com.webcaisse.ws.model.CommandeOut;
+import com.webcaisse.ws.model.LigneCommandeOut;
+import com.webcaisse.ws.model.PrixOut;
 
 public class CommandeManagerServiceImpl implements CommandeManagerService {
 
 	@Autowired
 	ISessionDao sessionDao;
+	
+	@Autowired
+	ICommandeDao commandeDao ; 
 
 	public List<CommandeOut> rechercherCommande(Long idSession) {
 
@@ -58,9 +66,46 @@ public class CommandeManagerServiceImpl implements CommandeManagerService {
 			c.setLibelleProduit(sb.toString());
 			c.setDateCommande(commande.getDateCommande());
 			c.setEtat(commande.getEtat());
+			c.setId(commande.getId());
 			commandeVo.add(c);
 			sb.delete(0,sb.length());index=1 ;
 		}
+	}
+
+	public CommandeOut loadCommandeById(Long idCommande) {
+	 
+      CommandeOut  commandeVo = null ;
+		
+		Commande commande = commandeDao.loadCommandeById(idCommande) ;
+		
+		List<LigneCommandeOut> ligneCommandeOuts = new ArrayList<LigneCommandeOut>();
+		
+		
+		if (commande != null){
+			
+			commandeVo=new CommandeOut() ;
+			commandeVo.setLigneCommandeOut(ligneCommandeOuts);
+			List<LigneCommande> ligneCommandes = commande.getLigneCommandes();
+			
+			
+			for (LigneCommande ligneCommande : ligneCommandes) {
+				
+				LigneCommandeOut ligneCommandeOut = new LigneCommandeOut() ; 
+				 
+				  ligneCommandeOut.setQuantite(ligneCommande.getQte());
+				  ligneCommandeOut.setLibelle(ligneCommande.getProduit().getLibelle());
+				  ligneCommandeOut.setPrixUnitaire(ligneCommande.getPrix());
+				
+				commandeVo.getLigneCommandeOut().add(ligneCommandeOut) ;
+			}
+			
+			    commandeVo.setMode(commande.getMode());
+			
+			
+		}
+		
+		
+		return commandeVo;
 	}
 
 }

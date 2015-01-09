@@ -25,6 +25,7 @@
 	<bean name="livreurService" class="com.webcaisse.ws.impl.LivreurManagerServiceImpl"/>
 	
 	
+	
 	<!-- End points -->
 	<jaxws:endpoint id="gestionCaisse" implementor="#wcBean"
 		address="/gestionCaisse" />
