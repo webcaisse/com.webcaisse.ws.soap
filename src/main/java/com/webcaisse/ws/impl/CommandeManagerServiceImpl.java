@@ -67,6 +67,7 @@ public class CommandeManagerServiceImpl implements CommandeManagerService {
 			c.setDateCommande(commande.getDateCommande());
 			c.setEtat(commande.getEtat());
 			c.setId(commande.getId());
+			c.setNomLivreur(commande.getLivreur()!=null?commande.getLivreur().getNom():null) ;
 			commandeVo.add(c);
 			sb.delete(0,sb.length());index=1 ;
 		}
@@ -100,12 +101,22 @@ public class CommandeManagerServiceImpl implements CommandeManagerService {
 			}
 			
 			    commandeVo.setMode(commande.getMode());
-			
+			    commandeVo.setNomLivreur(commande.getLivreur().getNom());
 			
 		}
 		
 		
 		return commandeVo;
+	}
+
+	public List<CommandeOut> getCommandesByIdLivreur(Long idLivreur) {
+		
+		    List<CommandeOut> commandeVo = new ArrayList<CommandeOut>();
+			
+			List<Commande> commandes = commandeDao.getCommandesByIdLivreur(idLivreur) ;
+			
+			pouplateCommandeOut(commandeVo, commandes);
+			return commandeVo;
 	}
 
 }
