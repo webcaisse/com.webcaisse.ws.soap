@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.webcaisse.dao.hibernate.IProductDao;
 import com.webcaisse.dao.hibernate.ISessionDao;
 import com.webcaisse.dao.hibernate.ISocieteDao;
+import com.webcaisse.dao.hibernate.model.Client;
 import com.webcaisse.dao.hibernate.model.Commande;
 import com.webcaisse.dao.hibernate.model.Famille;
 import com.webcaisse.dao.hibernate.model.LigneCommande;
@@ -17,6 +18,7 @@ import com.webcaisse.dao.hibernate.model.Produit;
 import com.webcaisse.dao.hibernate.model.Session;
 import com.webcaisse.dao.hibernate.model.Societe;
 import com.webcaisse.ws.interfaces.CaisseManagerService;
+import com.webcaisse.ws.model.ClientIn;
 import com.webcaisse.ws.model.CommandeIn;
 import com.webcaisse.ws.model.FamilleIn;
 import com.webcaisse.ws.model.FamilleOut;
@@ -131,35 +133,34 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 
 	}
 
-	public Long sauvegarderCommande(CommandeIn in    ) {
+	public Long sauvegarderCommande(CommandeIn in ) {
 		
 		List<LigneCommandeIn> listLigneCommandeIn  = in.getLignesCommandesIn() ;
 	
 		List<LigneCommande> lc = new ArrayList<LigneCommande> ();
-		
 		Session session = sessionDao.loadSessionById(in.getIdSession());
+		
+		ClientIn clientIn= in.getClientIn() ;
+		Client client = new Client() ;
+		
+		client.setNom(clientIn.getNom());
+		client.setPrenom(clientIn.getPrenom());
+		client.setImmeuble(clientIn.getImmeuble());
+		client.setEtage(clientIn.getEtage());
+		client.setInterphone(clientIn.getInterphone());
+		client.setNomVoie(clientIn.getNomRue());
+		client.setNumeroRue(clientIn.getNumeroRue());
+		client.setSociete(session.getUser().getSociete());
 		
 		Commande commande = new  Commande() ;
 		commande.setDateCommande(new Date());
 		
-		//Societe societe = societeDao.loadById(in.getIdSociete());
 		
-		// load societe par son id
 		commande.setSociete(session.getUser().getSociete());
 		
-		
-	//	session.setSociete(societe);
-//		User user = new User();
-//		user.setId(in.getIdUser());
-//		user.setSociete(societe);
-//		session.setUser(user);
-		//session.setId(in.getIdSession());
 		commande.setSession(session);
-		
-//		Produit produit = new Produit() ;
-		
-		
-	
+
+			
 		for (LigneCommandeIn ligneCommandeIn : listLigneCommandeIn)	{
 	
 			
@@ -183,6 +184,9 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 		commande.setMode(in.getMode());
 		commande.setMontant(in.getMontant());
 		commande.setCommentaire(in.getNotes());
+		
+		commande.setClient(client);
+		
 		return  productDao.sauvegarderCommande(commande) ;
 		
 		
