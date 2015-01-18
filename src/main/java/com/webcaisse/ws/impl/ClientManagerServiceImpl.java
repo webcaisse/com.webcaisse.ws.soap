@@ -143,6 +143,19 @@ public class ClientManagerServiceImpl implements ClientManagerService {
 			ClientOut c = new ClientOut();
 			
 			c.setTelephone(client.getTelephone());
+			c.setCode1(client.getCode1());
+			c.setCode2(client.getCode2());
+			c.setCode3(client.getCode3());
+			c.setCodePostale(client.getCodePostale());
+			c.setEmail(client.getEmail());
+			c.setEtage(client.getEtage());
+			c.setId(client.getId());
+			c.setImmeuble(client.getImmeuble());
+			c.setInterphone(client.getInterphone());
+			c.setNom(client.getNom());
+			c.setNomRue(client.getNomVoie());
+			c.setNumeroRue(client.getNumeroRue());
+			c.setVille(client.getVille());
 			clientVo.add(c);
 		}
 
