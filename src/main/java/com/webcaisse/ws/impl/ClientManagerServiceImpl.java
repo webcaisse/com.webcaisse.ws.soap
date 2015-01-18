@@ -133,4 +133,23 @@ public class ClientManagerServiceImpl implements ClientManagerService {
 		return clientVo;
 	}
 
-}
+	public List<ClientOut> autoCompleteClient(String param) {
+		
+		
+		List<ClientOut> clientVo = new ArrayList<ClientOut>();
+		List<Client> clients = clientDao.autoCompleteClient(param) ;
+		
+		for (Client client : clients) {
+			ClientOut c = new ClientOut();
+			
+			c.setTelephone(client.getTelephone());
+			clientVo.add(c);
+		}
+
+		return clientVo;
+	}
+		
+
+	}
+
+
