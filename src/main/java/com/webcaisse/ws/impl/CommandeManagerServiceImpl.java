@@ -10,7 +10,9 @@ import com.webcaisse.dao.hibernate.ICommandeDao;
 import com.webcaisse.dao.hibernate.ISessionDao;
 import com.webcaisse.dao.hibernate.model.Client;
 import com.webcaisse.dao.hibernate.model.Commande;
+import com.webcaisse.dao.hibernate.model.EtatCommande;
 import com.webcaisse.dao.hibernate.model.LigneCommande;
+import com.webcaisse.dao.hibernate.model.Livreur;
 import com.webcaisse.ws.interfaces.CommandeManagerService;
 import com.webcaisse.ws.model.ClientOut;
 import com.webcaisse.ws.model.CommandeOut;
@@ -65,9 +67,10 @@ public class CommandeManagerServiceImpl implements CommandeManagerService {
 
 			c.setLibelleProduit(sb.toString());
 			c.setDateCommande(commande.getDateCommande());
-			c.setEtat(commande.getEtat());
+			//c.setEtat(commande.getEtat());
 			c.setId(commande.getId());
 			c.setNomLivreur(commande.getLivreur()!=null?commande.getLivreur().getNom():null) ;
+			c.setEtat(commande.getEtatCommande()!=null?commande.getEtatCommande().getCode():null);
 			commandeVo.add(c);
 			sb.delete(0,sb.length());index=1 ;
 		}
@@ -119,4 +122,32 @@ public class CommandeManagerServiceImpl implements CommandeManagerService {
 			return commandeVo;
 	}
 
+	// c c bien
+	public List<CommandeOut>  getCommandesByEtat(String etatCommande)  {
+		List<CommandeOut> commandeVo = new ArrayList<CommandeOut>();
+		
+		List<Commande> commandes = commandeDao.getCommandesByEtat(etatCommande) ;
+		
+		pouplateCommandeOut(commandeVo, commandes);
+		return commandeVo;
+	}
+
+	
+	
+	
+	// ca on a pas besoin
+	public void affecterEtatToCommande(String etatCommande ,Long idCommande) {
+		
+		EtatCommande ew=commandeDao.loadEtatCommandeByCode(etatCommande) ;
+
+		Commande  commande = commandeDao.loadCommandeById(idCommande) ;
+       
+		if(ew!=null){
+		commande.setEtatCommande(ew);
+		commandeDao.updateCommande(commande);
+		}
+	
+	}
+	
+	
 }
