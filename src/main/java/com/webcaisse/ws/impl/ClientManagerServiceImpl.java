@@ -154,7 +154,7 @@ public class ClientManagerServiceImpl implements ClientManagerService {
 			clientVo.add(c);
 		}
 
-		return clientVo;
+		return clientVo ;
 	}
 
 }

@@ -11,6 +11,7 @@ import com.webcaisse.dao.hibernate.ISessionDao;
 import com.webcaisse.dao.hibernate.ISocieteDao;
 import com.webcaisse.dao.hibernate.model.Client;
 import com.webcaisse.dao.hibernate.model.Commande;
+import com.webcaisse.dao.hibernate.model.EtatCommande;
 import com.webcaisse.dao.hibernate.model.Famille;
 import com.webcaisse.dao.hibernate.model.LigneCommande;
 import com.webcaisse.dao.hibernate.model.Prix;
@@ -20,6 +21,7 @@ import com.webcaisse.dao.hibernate.model.Societe;
 import com.webcaisse.ws.interfaces.CaisseManagerService;
 import com.webcaisse.ws.model.ClientIn;
 import com.webcaisse.ws.model.CommandeIn;
+import com.webcaisse.ws.model.EtatCommandeIn;
 import com.webcaisse.ws.model.FamilleIn;
 import com.webcaisse.ws.model.FamilleOut;
 import com.webcaisse.ws.model.LigneCommandeIn;
@@ -152,6 +154,12 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 		client.setNumeroRue(clientIn.getNumeroRue());
 		client.setSociete(session.getUser().getSociete());
 		
+//		EtatCommandeIn  etatCommandeIn= in.getEtatCommandeIn() ;
+//		EtatCommande etatCommande= new EtatCommande() ;
+//		etatCommande.setCode(etatCommandeIn.getCode());
+		
+		
+		
 		Commande commande = new  Commande() ;
 		commande.setDateCommande(new Date());
 		
@@ -184,7 +192,7 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 		commande.setMode(in.getMode());
 		commande.setMontant(in.getMontant());
 		commande.setCommentaire(in.getNotes());
-		
+		//commande.setEtatCommande(etatCommande);
 		commande.setClient(client);
 		
 		return  productDao.sauvegarderCommande(commande) ;
