@@ -48,7 +48,8 @@ public class CommandeManagerServiceImpl implements CommandeManagerService {
 	public CommandeOut loadCommandeById(Long idCommande) {
 
 		CommandeOut commandeVo = null;
-
+        Double montant = 0D ;
+        
 		Commande commande = commandeDao.loadCommandeById(idCommande);
 
 		List<LigneCommandeOut> ligneCommandeOuts = new ArrayList<LigneCommandeOut>();
@@ -64,16 +65,17 @@ public class CommandeManagerServiceImpl implements CommandeManagerService {
 				LigneCommandeOut ligneCommandeOut = new LigneCommandeOut();
 
 				ligneCommandeOut.setQuantite(ligneCommande.getQte());
-				ligneCommandeOut.setLibelle(ligneCommande.getProduit()!=null?ligneCommande.getProduit()
-						.getLibelle():null);
+				ligneCommandeOut.setLibelle(ligneCommande.getProduit()!=null?ligneCommande.getProduit().getLibelle():null);
 				ligneCommandeOut.setPrixUnitaire(ligneCommande.getPrix());
+				ligneCommandeOut.setTotal(ligneCommande.getTotale());
 
 				commandeVo.getLigneCommandeOut().add(ligneCommandeOut);
+				montant+=ligneCommandeOut.getTotal() ;
 			}
 
 			commandeVo.setMode(commande.getMode());
 			commandeVo.setNomLivreur(commande.getLivreur()!=null?commande.getLivreur().getNom():null);
-
+            commandeVo.setMontant(montant);
 		}
 
 		return commandeVo;
@@ -106,9 +108,9 @@ public class CommandeManagerServiceImpl implements CommandeManagerService {
 			c.setLibelleProduit(sb.toString());
 			c.setDateCommande(commande.getDateCommande());
 			//c.setEtat(commande.getEtat());
+			c.setMontant(commande.getMontant());
 			c.setId(commande.getId());
-			c.setNomLivreur(commande.getLivreur() != null ? commande
-					.getLivreur().getNom() : null);
+			c.setNomLivreur(commande.getLivreur() != null ? commande.getLivreur().getNom() : null);
 			c.setMode(commande.getMode());
 			pouplateCommandeOut(commande.getEtatCommande(), c);
 			commandeVo.add(c);
@@ -128,7 +130,7 @@ public class CommandeManagerServiceImpl implements CommandeManagerService {
 		}
 	}
 
-	// c c bien
+
 	public List<CommandeOut>  getCommandesByEtat(String etatCommande)  {
 		List<CommandeOut> commandeVo = new ArrayList<CommandeOut>();
 		
@@ -139,14 +141,13 @@ public class CommandeManagerServiceImpl implements CommandeManagerService {
 	}
 
 	
-	
-	
-	// ca on a pas besoin
-	public void affecterEtatToCommande(String etatCommande ,Long idCommande) {
+
+	public void affecterEtatToCommandeAvecMode(String etatCommande ,Long idCommande,String modeCommande) {
 		
 		EtatCommande ew=commandeDao.loadEtatCommandeByCode(etatCommande) ;
 
 		Commande  commande = commandeDao.loadCommandeById(idCommande) ;
+		commande.setMode(modeCommande);
        
 		if(ew!=null){
 		commande.setEtatCommande(ew);
@@ -154,6 +155,18 @@ public class CommandeManagerServiceImpl implements CommandeManagerService {
 		}
 	
 	}
+    public void affecterEtatToCommande(String etatCommande ,Long idCommande) {
+		
+		EtatCommande ew=commandeDao.loadEtatCommandeByCode(etatCommande) ;
+
+		Commande  commande = commandeDao.loadCommandeById(idCommande) ;
+		
+       
+		if(ew!=null){
+		commande.setEtatCommande(ew);
+		commandeDao.updateCommande(commande);
+		}
 	
+	}
 	
 }

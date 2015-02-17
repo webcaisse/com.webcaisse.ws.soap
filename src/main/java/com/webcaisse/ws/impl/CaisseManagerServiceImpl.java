@@ -136,6 +136,7 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 	}
 
 	public Long sauvegarderCommande(CommandeIn in ) {
+		double montant=0D ;
 		
 		List<LigneCommandeIn> listLigneCommandeIn  = in.getLignesCommandesIn() ;
 	
@@ -182,7 +183,7 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 		    ligneCommande.setProduit(produit);
 		    ligneCommande.setQte(ligneCommandeIn.getQuantite());
 		    ligneCommande.setTotale(ligneCommandeIn.getPrix()*ligneCommandeIn.getQuantite());
-		    
+		    montant+=ligneCommande.getTotale() ;
 	        lc.add(ligneCommande) ;
 		
 		}
@@ -190,9 +191,8 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 		
 		commande.setLigneCommandes(lc);
 		commande.setMode(in.getMode());
-		commande.setMontant(in.getMontant());
+		commande.setMontant(montant);
 		commande.setCommentaire(in.getNotes());
-		//commande.setEtatCommande(etatCommande);
 		commande.setClient(client);
 		
 		return  productDao.sauvegarderCommande(commande) ;
