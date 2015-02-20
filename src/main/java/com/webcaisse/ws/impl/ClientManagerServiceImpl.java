@@ -108,6 +108,7 @@ public class ClientManagerServiceImpl implements ClientManagerService {
 		if (client != null) {
 
 			clientVo = new ClientOut();
+			clientVo.setId(client.getId());
 			clientVo.setNom(client.getNom());
 			clientVo.setPrenom(client.getPrenom());
 			clientVo.setEmail(client.getEmail());
