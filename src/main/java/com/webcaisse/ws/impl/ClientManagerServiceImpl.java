@@ -47,7 +47,7 @@ public class ClientManagerServiceImpl implements ClientManagerService {
 		return clientVo;
 	}
 
-	public void ajouterClient(ClientIn c) {
+	public Long ajouterClient(ClientIn c) {
 
 		Client client = new Client();
 		Societe societe = new Societe();
@@ -68,7 +68,7 @@ public class ClientManagerServiceImpl implements ClientManagerService {
 		client.setNomVoie(c.getNomRue());
 		client.setVille(c.getVille());
 
-		clientDao.ajouterClient(client);
+		return clientDao.ajouterClient(client);
 
 	}
 
