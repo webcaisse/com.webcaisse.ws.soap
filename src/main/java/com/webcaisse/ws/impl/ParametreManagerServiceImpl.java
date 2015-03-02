@@ -14,6 +14,7 @@ import com.webcaisse.dao.hibernate.model.Societe;
 import com.webcaisse.dao.hibernate.model.User;
 import com.webcaisse.ws.interfaces.ParametreManagerService;
 import com.webcaisse.ws.model.ParametreIn;
+import com.webcaisse.ws.model.ParametreOut;
 import com.webcaisse.ws.model.UserIn;
 import com.webcaisse.ws.model.UserOut;
 
@@ -82,6 +83,55 @@ public class ParametreManagerServiceImpl implements ParametreManagerService {
 		
 		
 		return userVo;
+	}
+
+	
+
+	public ParametreOut getReferenceByName(String referenceName) {
+		
+		ParametreOut parametreOut =null ;
+		Reference parametre= parametreDao.getReferenceByName(referenceName) ;
+		
+		if(parametre!=null){
+			
+			parametreOut= new ParametreOut() ;
+			parametreOut.setValeur(parametre.getValeur());
+			
+		}
+		
+		return parametreOut;
+	}
+
+	public List<ParametreOut> getHeaderReferences(Long idSociete) {
+		List<ParametreOut> parametreVo= new ArrayList<ParametreOut>() ;
+		List<Reference>  references =parametreDao.getHeaderReferences(idSociete);
+		
+		for (Reference reference : references) {
+			ParametreOut parametreOut= new ParametreOut() ;
+			//parametreOut.setNomParametre(reference.getNomParametre());
+			parametreOut.setValeur(reference.getValeur());
+			parametreVo.add(parametreOut) ;
+		}
+		
+		return parametreVo ;
+		
+	}
+
+	
+
+	public List<ParametreOut> getFootersReferences(Long idSociete) {
+		List<ParametreOut> parametreVo= new ArrayList<ParametreOut>() ;
+		List<Reference>  references =parametreDao.getFootersReferences(idSociete);
+		
+		for (Reference reference : references) {
+			ParametreOut parametreOut= new ParametreOut() ;
+			//parametreOut.setNomParametre(reference.getNomParametre());
+			parametreOut.setValeur(reference.getValeur());
+			parametreVo.add(parametreOut) ;
+		}
+		
+		return parametreVo ;
+		
 	}
 
 }
