@@ -93,19 +93,29 @@ public class CommandeManagerServiceImpl implements CommandeManagerService {
 
 	private void pouplateCommandeOut(List<CommandeOut> commandeVo, List<Commande> commandes) {
 
-		StringBuffer sb = new StringBuffer();
-		int index = 1;
-
+		//StringBuffer sb = new StringBuffer();
+		//int index = 1;
+		
 		for (Commande commande : commandes) {
 			CommandeOut c = new CommandeOut();
-
+			List<LigneCommandeOut> ligneCommandeOuts = new ArrayList<LigneCommandeOut>();
+			c.setLigneCommandeOut(ligneCommandeOuts);
 			List<LigneCommande> ligneCommandes = commande.getLigneCommandes();
+			
 			for (LigneCommande ligneCommande : ligneCommandes) {
-				sb.append("(" + index + ") ");
-				sb.append(ligneCommande.getProduit().getLibelle()).append(" ");
-				index++;
+				
+				LigneCommandeOut ligneCommandeOut = new LigneCommandeOut();
+				ligneCommandeOut.setQuantite(ligneCommande.getQte());
+				ligneCommandeOut.setLibelle(ligneCommande.getProduit()!=null?ligneCommande.getProduit().getLibelle():null);
+				
+				c.getLigneCommandeOut().add(ligneCommandeOut);
+				
+				//sb.append("(" + index + ") ");
+				//sb.append(ligneCommande.getProduit().getLibelle()).append(" ");
+				//index++;
+				//c.setLibelleProduit (ligneCommande.getProduit().getLibelle() );
 			}
-			c.setLibelleProduit(sb.toString());
+			//c.setLibelleProduit(sb.toString());
 			c.setDateCommande(commande.getDateCommande());
 			//c.setEtat(commande.getEtat());
 			c.setMontant(commande.getMontant());
@@ -114,8 +124,8 @@ public class CommandeManagerServiceImpl implements CommandeManagerService {
 			c.setMode(commande.getMode());
 			pouplateCommandeOut(commande.getEtatCommande(), c);
 			commandeVo.add(c);
-			sb.delete(0, sb.length());
-			index = 1;
+			//sb.delete(0, sb.length());
+			//index = 1;
 		}
 	}
 
