@@ -6,12 +6,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.webcaisse.dao.hibernate.ICommandeDao;
 import com.webcaisse.dao.hibernate.IProductDao;
 import com.webcaisse.dao.hibernate.ISessionDao;
 import com.webcaisse.dao.hibernate.ISocieteDao;
 import com.webcaisse.dao.hibernate.model.Client;
 import com.webcaisse.dao.hibernate.model.Commande;
-import com.webcaisse.dao.hibernate.model.EtatCommande;
 import com.webcaisse.dao.hibernate.model.Famille;
 import com.webcaisse.dao.hibernate.model.LigneCommande;
 import com.webcaisse.dao.hibernate.model.Prix;
@@ -21,7 +21,8 @@ import com.webcaisse.dao.hibernate.model.Societe;
 import com.webcaisse.ws.interfaces.CaisseManagerService;
 import com.webcaisse.ws.model.ClientIn;
 import com.webcaisse.ws.model.CommandeIn;
-import com.webcaisse.ws.model.EtatCommandeIn;
+import com.webcaisse.ws.model.DetailsModePaiementIn;
+import com.webcaisse.ws.model.DetailsModePaiementOut;
 import com.webcaisse.ws.model.FamilleIn;
 import com.webcaisse.ws.model.FamilleOut;
 import com.webcaisse.ws.model.LigneCommandeIn;
@@ -40,6 +41,15 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 	@Autowired 
 	ISessionDao sessionDao;
 
+	@Autowired 
+	ICommandeDao commandeDao;
+	
+	private static final String LIBELLE_ESPECE = "Espèce";
+	private static final String LIBELLE_CF = "Carte fidelité";
+	private static final String LIBELLE_TR = "Ticket restaurent";
+	private static final String LIBELLE_CB = "Carte bancaire";
+	private static final String LIBELLE_CHEQUE = "Chèque";
+	
 	public List<com.webcaisse.ws.model.FamilleOut> getFamillesActivees(Long idSociete) {
 		List<com.webcaisse.ws.model.FamilleOut> famillesVo = new ArrayList<com.webcaisse.ws.model.FamilleOut>();
 		List<Famille> familles = productDao.getFamillies(idSociete);
@@ -53,32 +63,6 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 		return famillesVo;
 	}
 
-	public List<com.webcaisse.ws.model.FamilleOut> getProduitParFamilleReference(
-			String reference) {
-
-		System.out.println("je suis la dans le webservice");
-		// Famille famille = new Famille("Pizza",reference);
-		//
-		// Produit prod1 = new Produit();
-		// Produit prod2 = new Produit();
-		//
-		// prod1.setFamille(famille);
-		// prod1.setLibelle("Margeretta");
-		// prod1.setPrix(12D);
-		//
-		//
-		// prod2.setFamille(famille);
-		// prod2.setLibelle("Napolitaine");
-		// prod2.setPrix(20D);
-
-		// return null;// Arrays.asList(new Produit[]{prod1,prod2});
-
-		// pas d'implementation pour l'instant
-
-		return null;
-	}
-
-	
 	public List<ProduitOut> getProductsByFamilly(Long familleId) {
 
 		List<com.webcaisse.ws.model.ProduitOut> produitsVo = new ArrayList<com.webcaisse.ws.model.ProduitOut>();
@@ -93,7 +77,6 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 			p.setCode(produit.getCode());
 			produitsVo.add(p);
 	
-
 		}
 
 		return produitsVo;
@@ -279,6 +262,35 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 	}
 
 	return familleVo ;
+	}
+
+	public List<DetailsModePaiementOut> afficherDetailesModePaiement(
+			DetailsModePaiementIn in) {
+		
+		List<DetailsModePaiementOut> detailsModePaiementOut = new ArrayList<DetailsModePaiementOut>();
+		
+		Double montantEspece = 0D;
+		Double montantCb = 0D;
+		Double montantCf = 0D;
+		Double montantCheque = 0D;
+		Double montantTr = 0D;
+		
+		List<Commande> commandes  = commandeDao.getordersByDates(in.getDateDebutStats(), in.getDateFinStats(), in.getIdSociete());
+		if (commandes!=null){
+			for (Commande commande : commandes) {
+				montantEspece+=commande.getRegEspece()!=null?commande.getRegEspece():0D;
+				montantCb+=commande.getRegCB()!=null?commande.getRegCB():0D;
+				montantCf+=commande.getRegCarteFidelite()!=null?commande.getRegCarteFidelite():0D;
+				montantCheque+=commande.getRegCheque()!=null?commande.getRegCheque():0D;
+				montantTr+=commande.getRegTicketRestau()!=null?commande.getRegTicketRestau():0D;
+			}
+		}
+		detailsModePaiementOut.add(new DetailsModePaiementOut(LIBELLE_ESPECE, montantEspece));
+		detailsModePaiementOut.add(new DetailsModePaiementOut(LIBELLE_CB, montantCb));
+		detailsModePaiementOut.add(new DetailsModePaiementOut(LIBELLE_CF, montantCf));
+		detailsModePaiementOut.add(new DetailsModePaiementOut(LIBELLE_CHEQUE, montantCheque));
+		detailsModePaiementOut.add(new DetailsModePaiementOut(LIBELLE_TR, montantTr));
+		return detailsModePaiementOut;
 	}
 
 	
