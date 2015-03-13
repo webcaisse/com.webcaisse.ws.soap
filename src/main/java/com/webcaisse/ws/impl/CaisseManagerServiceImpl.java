@@ -147,7 +147,6 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 		Commande commande = new  Commande() ;
 		commande.setDateCommande(new Date());
 		
-		
 		commande.setSociete(session.getUser().getSociete());
 		
 		commande.setSession(session);
@@ -177,6 +176,12 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 		commande.setMontant(montant);
 		commande.setCommentaire(in.getNotes());
 		commande.setClient(client);
+		commande.setRegCarteFidelite(in.getRegCarteFidelite());
+		commande.setRegCB(in.getRegCB());
+		commande.setRegCheque(in.getRegCheque());
+		commande.setRegEspece(in.getRegEspece());
+		commande.setRegTicketRestau(in.getRegTicketRestau());
+		
 		
 		return  productDao.sauvegarderCommande(commande) ;
 		
@@ -264,8 +269,7 @@ public class CaisseManagerServiceImpl implements CaisseManagerService {
 	return familleVo ;
 	}
 
-	public List<DetailsModePaiementOut> afficherDetailesModePaiement(
-			DetailsModePaiementIn in) {
+	public List<DetailsModePaiementOut> afficherDetailesModePaiement(DetailsModePaiementIn in) {
 		
 		List<DetailsModePaiementOut> detailsModePaiementOut = new ArrayList<DetailsModePaiementOut>();
 		
